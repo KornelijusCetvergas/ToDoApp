@@ -54,5 +54,16 @@ public class ToDoService {
 	public void delete(Long id) {
 		toDoRepository.deleteById(id);
 	}
+
+	public ToDoDTO toggle(Long id) {
+		ToDo existing = toDoRepository.findById(id)
+				.orElseThrow( () -> new RuntimeException("ToDo with the ID:" + id + " not found.") );
+		if(existing.getIsDone()) {
+			existing.setIsDone(false);
+		} else {
+			existing.setIsDone(true);
+		}
+		return toDoMapper.toDTO(toDoRepository.save(existing));
+	}
 	
 }

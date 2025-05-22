@@ -53,5 +53,8 @@ public class ToDoController {
 		return ResponseEntity.ok("ToDo with the ID:" + id + " was deleted successfully");
 	}
 	
-	
+	@PatchMapping("/{id}/toggle")
+	public ResponseEntity<ToDoDTO> update(@PathVariable Long id) {
+		return ResponseEntity.ok( toDoService.toggle(id) );
+	}
 }
