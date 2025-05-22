@@ -50,7 +50,7 @@ public class ToDoController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
 		toDoService.delete(id);
-		return ResponseEntity.ok("ToDo with the ID:" + id + " was deleted sucessfully");
+		return ResponseEntity.ok("ToDo with the ID:" + id + " was deleted successfully");
 	}
 	
 	
