@@ -36,14 +36,14 @@ public class ToDoService {
 	}
 
 	public ToDoDTO create(ToDoDTO dto) {
-		ToDo entity = toDoMapper.toEntity(dto);
+		ToDo entity = toDoMapper.toEntity(dto); //DTO gets a unique id and isDone is set to false by default.
 		
 		return toDoMapper.toDTO( toDoRepository.save(entity) );
 	}
 
 	public ToDoDTO update(Long id, ToDoDTO dto) {
 		ToDo existing = toDoRepository.findById(id)
-				.orElseThrow( () -> new RuntimeException("ToDo with the ID:" + id + " not found.") );
+				.orElseThrow( () -> new RuntimeException("ToDo with the id " + id + " not found.") );
 		
 		existing.setDescription(dto.getDescription());
 		existing.setIsDone(dto.getIsDone());
@@ -57,13 +57,18 @@ public class ToDoService {
 
 	public ToDoDTO toggle(Long id) {
 		ToDo existing = toDoRepository.findById(id)
-				.orElseThrow( () -> new RuntimeException("ToDo with the ID:" + id + " not found.") );
-		if(existing.getIsDone()) {
+				.orElseThrow( () -> new RuntimeException("ToDo with the id " + id + " not found.") );
+		
+		if(existing.getIsDone()) 
 			existing.setIsDone(false);
-		} else {
+		else 
 			existing.setIsDone(true);
-		}
+		
 		return toDoMapper.toDTO(toDoRepository.save(existing));
+	}
+
+	public void deleteAllDone() {
+		toDoRepository.deleteByIsDone(true);
 	}
 	
 }

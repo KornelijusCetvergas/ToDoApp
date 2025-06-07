@@ -19,7 +19,7 @@ public class ToDoMapper {
 	public ToDo toEntity(ToDoDTO dto) {
 		return new ToDo(
 				dto.getDescription(),
-				dto.getIsDone()
+				false
 				);
 	}
 	
@@ -30,4 +30,6 @@ public class ToDoMapper {
 				dto.getIsDone()
 				);
 	}
+	
+	
 }

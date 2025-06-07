@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/todo")
 public class ToDoController {
@@ -48,13 +50,21 @@ public class ToDoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable Long id) {
+	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		toDoService.delete(id);
-		return ResponseEntity.ok("ToDo with the ID:" + id + " was deleted successfully");
+		return ResponseEntity.status(HttpStatusCode.valueOf(204))
+				.body(null);
 	}
 	
 	@PatchMapping("/{id}/toggle")
 	public ResponseEntity<ToDoDTO> update(@PathVariable Long id) {
 		return ResponseEntity.ok( toDoService.toggle(id) );
+	}
+	
+	@DeleteMapping("/alldone")
+	public ResponseEntity<Boolean> deleteAllDone() {
+		toDoService.deleteAllDone();
+		return ResponseEntity.status(HttpStatusCode.valueOf(204))
+				.body(null);
 	}
 }
